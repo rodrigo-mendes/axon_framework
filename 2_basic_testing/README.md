@@ -1,0 +1,1 @@
+# CQRS y Event Sourcing con Axon Framework ( Parte 2) - Como hacer Testing del Framework (Command/Event/Query)
