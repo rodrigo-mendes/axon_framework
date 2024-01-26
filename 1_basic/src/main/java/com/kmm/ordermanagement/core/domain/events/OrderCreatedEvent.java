@@ -5,6 +5,7 @@ import com.kmm.ordermanagement.core.domain.model.aggregate.OrderStatus;
 import com.kmm.ordermanagement.core.domain.model.entities.DeliveryAddress;
 import com.kmm.ordermanagement.core.domain.model.entities.OrderItem;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public record OrderCreatedEvent(UUID orderId,
@@ -25,5 +26,22 @@ public record OrderCreatedEvent(UUID orderId,
 			command.deliveryAddress(),
 			command.status());
 	}
-
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (!(o instanceof OrderCreatedEvent that)) {
+			return false;
+		}
+		return Objects.equals(orderId, that.orderId) && Objects.equals(customerId,
+			that.customerId) && Objects.equals(orderItems, that.orderItems)
+			&& Objects.equals(deliveryAddress, that.deliveryAddress) && status == that.status;
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(orderId, customerId, orderItems, deliveryAddress, status);
+	}
 }
