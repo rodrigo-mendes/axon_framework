@@ -9,6 +9,8 @@ import com.kmm.ordermanagement.infrastructure.adapters.postgres.repositories.Ord
 import com.kmm.ordermanagement.infrastructure.adapters.postgres.repositories.entities.OrderEntity;
 import com.kmm.ordermanagement.infrastructure.adapters.postgres.repositories.entities.OrderItemEntity;
 import com.kmm.ordermanagement.infrastructure.adapters.postgres.repositories.entities.OrderItemKey;
+import java.math.BigDecimal;
+import java.util.Optional;
 import org.axonframework.eventhandling.EventHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +50,12 @@ public class OrderProjectorService {
 		// Add logic to project the ProductAddedEvent
 		logger.info("Projecting ProductAddedEvent: {}", event);
 		OrderItemEntity orderItemEntity = new OrderItemEntity(event);
+		Optional<OrderEntity> orderEntity = orderEntityRepository.findById(event.orderId());
+		orderEntity.ifPresent(entity ->
+			orderEntityRepository.updateOrderTotalAmount(entity.getOrderId(), entity.getTotalAmount().add(
+				event.price().multiply(BigDecimal.valueOf(event.quantity())))
+			)
+		);
 		orderItemEntityRepository.save(orderItemEntity);
 	}
 	
@@ -56,6 +64,16 @@ public class OrderProjectorService {
 		// Add logic to project the ProductAddedEvent
 		logger.info("Projecting ProductAddedEvent: {}", event);
 		OrderItemKey key = new OrderItemKey(event.orderId(), event.productId());
+		Optional<OrderEntity> orderEntity = orderEntityRepository.findById(event.orderId());
+		Optional<OrderItemEntity> orderItemEntity = orderItemEntityRepository.findById(key);
+		OrderItemEntity newItens = orderItemEntity.get();
+		orderEntity.ifPresent(entity ->
+			orderEntityRepository.updateOrderTotalAmount(entity.getOrderId(),
+				entity.getTotalAmount().subtract(
+					newItens.getPrice().multiply(BigDecimal.valueOf(newItens.getQuantity()))
+				)
+			)
+		);
 		orderItemEntityRepository.deleteById(key);
 	}
 }

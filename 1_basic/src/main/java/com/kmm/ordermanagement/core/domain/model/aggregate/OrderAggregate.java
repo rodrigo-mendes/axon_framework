@@ -90,7 +90,6 @@ public class OrderAggregate {
 	public void on(ProductAddedEvent event) {
 		this.orderItems.add( OrderItem.from(event));
 		this.totalAmount = calculateTotalAmount(orderItems);
-		
 	}
 	
 	@CommandHandler
