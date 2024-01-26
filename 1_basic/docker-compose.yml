@@ -23,19 +23,6 @@ services:
       - postgres
     volumes:
       - axon-server-data:/data
-  # Spring Boot Application
-#  axon_basic:
-#    build:
-#      dockerfile: .Dockerfile
-#    image: axon_basic:latest
-#    container_name: axon_basic
-#    ports:
-#      - "8080:8080"
-#    depends_on:
-#      - axon-server
-#      - postgres
-#    environment:
-#      WAIT_TIMEOUT: 120
 volumes:
   postgres-data:
   axon-server-data:
