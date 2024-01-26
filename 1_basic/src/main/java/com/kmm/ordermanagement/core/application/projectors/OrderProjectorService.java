@@ -18,8 +18,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class OrderProjectorService {
 	
-	Logger logger = LoggerFactory.getLogger(OrderProjectorService.class);
-	
+	private static final Logger logger = LoggerFactory.getLogger(OrderProjectorService.class);
 	private final OrderEntityRepository orderEntityRepository;
 	private final OrderItemEntityRepository orderItemEntityRepository;
 	
@@ -34,18 +33,6 @@ public class OrderProjectorService {
         logger.info("Projecting OrderCreatedEvent: {}", event);
 		// Add logic to project the OrderCreatedEvent
 		OrderEntity orderEntity = new OrderEntity(event);
-		orderEntity.setOrderId(event.orderId());
-		orderEntity.setOrderItems(event.orderItems().stream().map(orderItem -> {
-			OrderItemEntity orderItemEntity = new OrderItemEntity(
-				event.orderId(),
-				orderItem.getProductId(),
-                orderItem.getProductName(),
-                orderItem.getPrice(),
-                orderItem.getQuantity()
-			);
-			orderItemEntity.setOrderEntities(orderEntity);
-			return orderItemEntity;
-		}).toList());
 		orderEntityRepository.save(orderEntity);
 		
     }
@@ -60,12 +47,7 @@ public class OrderProjectorService {
 	public void on(ProductAddedEvent event) {
 		// Add logic to project the ProductAddedEvent
 		logger.info("Projecting ProductAddedEvent: {}", event);
-		OrderItemEntity orderItemEntity = new OrderItemEntity(
-            event.orderId(),
-            event.productId(),
-            event.productName(),
-            event.price(),
-			event.quantity());
+		OrderItemEntity orderItemEntity = new OrderItemEntity(event);
 		orderItemEntityRepository.save(orderItemEntity);
 	}
 	

@@ -1,5 +1,6 @@
 package com.kmm.ordermanagement.infrastructure.adapters.postgres.repositories.entities;
 
+import com.kmm.ordermanagement.core.domain.events.ProductAddedEvent;
 import com.kmm.ordermanagement.core.domain.model.entities.OrderItem;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -48,6 +49,13 @@ public class OrderItemEntity {
 		this.productName = productName;
 		this.price = price;
 		this.quantity = quantity;
+	}
+	
+	public OrderItemEntity(ProductAddedEvent event) {
+		this.id = new OrderItemKey(event.orderId(), event.productId());
+        this.productName = event.productName();
+        this.price = event.price();
+        this.quantity = event.quantity();
 	}
 	
 	public OrderItemKey getId() {
