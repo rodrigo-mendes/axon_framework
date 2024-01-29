@@ -101,7 +101,11 @@ The sequence diagram illustrates a sequence of interactions in a Spring-based ap
    - The `@Service` class interacts with a repository (likely a database repository) to retrieve data based on the query's criteria. The arrow labeled "Service --> Repository: find(Criteria C)" illustrates this interaction.
    - The repository's `find` method is called with criteria (`Criteria C`) to retrieve the relevant data.
 
-In plain English, this diagram describes the flow of a query operation in a Spring-based application. The Spring Controller initiates a query, which is then handled by the Query Gateway. The Query Gateway delegates the query to a service class annotated with `@Service`. This service class, in turn, interacts with a repository to fetch data based on the query's criteria. The entire process represents a common flow in handling queries in a CQRS (Command Query Responsibility Segregation) architecture using Axon Framework in a Spring application.
+In plain English, this diagram describes the flow of a query operation in a Spring-based application. 
+The Spring Controller initiates a query, which is then handled by the Query Gateway. 
+The Query Gateway delegates the query to a service class annotated with `@Service`. 
+This service class, in turn, interacts with a repository to fetch data based on the query's criteria. 
+The entire process represents a common flow in handling queries in a CQRS (Command Query Responsibility Segregation) architecture using Axon Framework in a Spring application.
 
 ## Testing
 
@@ -144,18 +148,15 @@ curl -X POST --location "http://localhost:8080/api/v1/order/" \
 curl -X GET --location "http://localhost:8080/api/v1/order/{{orderId}}"
 ```
 
-
 ```bash
 curl -X GET --location "http://localhost:8080/api/v1/order/"
 ```
-
 
 ```bash
 curl -X DELETE --location "http://localhost:8080/api/v1/order/{{orderId}}"
 ```
 
 ### Product
-
 The ProductController class is a REST controller that handles HTTP requests related to products. 
 It has methods to add a product to an order and remove a product from an order.
 
@@ -177,6 +178,3 @@ curl -X GET --location "http://localhost:8080/api/v1/product//{{orderId}}/produc
 ```bash
 curl -X DELETE --location "http://localhost:8080/api/v1/product//{{orderId}}/product//{{productId}}"
 ```
-
-
-
