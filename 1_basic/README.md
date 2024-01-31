@@ -1,4 +1,4 @@
-# CQRS y Event Sourcing con Axon Framework ( Parte 2) - Como hacer uso del Framework (Command/Event/Query)
+# CQRS and Event Sourcing with Axon Framework (Part 2) - How to use the Framework (Command/Event/Query)
 
 # How to start
 
