@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      POSTGRES_USER: order
+      POSTGRES_PASSWORD: order123
+      POSTGRES_DB: order_management
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  # Axon Server
+  axon-server:
+    image: axoniq/axonserver:latest
+    container_name: axon-server
+    ports:
+      - "8024:8024"
+      - "8124:8124"
+    depends_on:
+      - postgres
+    volumes:
+      - axon-server-data:/data
+volumes:
+  postgres-data:
+  axon-server-data:
