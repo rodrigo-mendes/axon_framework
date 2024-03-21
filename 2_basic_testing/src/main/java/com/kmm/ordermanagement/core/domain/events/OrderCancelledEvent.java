@@ -30,4 +30,12 @@ public record OrderCancelledEvent(UUID orderId, OrderStatus status) {
 	public int hashCode() {
 		return Objects.hash(orderId, status);
 	}
+	
+	@Override
+	public String toString() {
+		return "OrderCancelledEvent{" +
+			"orderId=" + orderId +
+			", status=" + status +
+			'}';
+	}
 }

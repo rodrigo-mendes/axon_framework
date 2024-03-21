@@ -44,4 +44,15 @@ public record OrderCreatedEvent(UUID orderId,
 	public int hashCode() {
 		return Objects.hash(orderId, customerId, orderItems, deliveryAddress, status);
 	}
+	
+	@Override
+	public String toString() {
+		return "OrderCreatedEvent{" +
+			"orderId=" + orderId +
+			", customerId=" + customerId +
+			", orderItems=" + orderItems +
+			", deliveryAddress=" + deliveryAddress +
+			", status=" + status +
+			'}';
+	}
 }

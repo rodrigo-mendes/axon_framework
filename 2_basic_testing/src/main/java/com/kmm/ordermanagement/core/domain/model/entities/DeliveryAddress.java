@@ -1,5 +1,7 @@
 package com.kmm.ordermanagement.core.domain.model.entities;
 
+import java.util.Objects;
+
 public class DeliveryAddress {
   
   private String street;
@@ -47,5 +49,33 @@ public class DeliveryAddress {
   
   public void setZipCode(String zipCode) {
     this.zipCode = zipCode;
+  }
+  
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof DeliveryAddress that)) {
+      return false;
+    }
+	  return Objects.equals(getStreet(), that.getStreet()) && Objects.equals(
+        getCity(), that.getCity()) && Objects.equals(getState(), that.getState())
+        && Objects.equals(getZipCode(), that.getZipCode());
+  }
+  
+  @Override
+  public int hashCode() {
+    return Objects.hash(getStreet(), getCity(), getState(), getZipCode());
+  }
+  
+  @Override
+  public String toString() {
+    return "DeliveryAddress{" +
+        "street='" + street + '\'' +
+        ", city='" + city + '\'' +
+        ", state='" + state + '\'' +
+        ", zipCode='" + zipCode + '\'' +
+        '}';
   }
 }

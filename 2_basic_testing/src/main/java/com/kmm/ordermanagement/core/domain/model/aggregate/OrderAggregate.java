@@ -12,6 +12,7 @@ import com.kmm.ordermanagement.core.domain.events.ProductRemovedEvent;
 import com.kmm.ordermanagement.core.domain.model.entities.OrderItem;
 import com.kmm.ordermanagement.core.domain.model.entities.DeliveryAddress;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import org.axonframework.commandhandling.CommandHandler;
@@ -34,6 +35,7 @@ public class OrderAggregate {
 	private OrderStatus status;
 	
 	public OrderAggregate() {
+		this.orderItems = new ArrayList<>();
 	}
 	
 	@CommandHandler
@@ -88,7 +90,9 @@ public class OrderAggregate {
 	
 	@EventSourcingHandler
 	public void on(ProductAddedEvent event) {
-		this.orderItems.add( OrderItem.from(event));
+		List<OrderItem> newList = new ArrayList<>(this.orderItems);
+		newList.add(OrderItem.from(event));
+		this.orderItems = newList;
 		this.totalAmount = calculateTotalAmount(orderItems);
 	}
 	
@@ -103,7 +107,9 @@ public class OrderAggregate {
 	
 	@EventSourcingHandler
     public void on(ProductRemovedEvent event) {
-        this.orderItems.removeIf(orderItem -> orderItem.getProductId().equals(event.productId()));
+		List<OrderItem> newList = new ArrayList<>(this.orderItems);
+		newList.removeIf(orderItem -> orderItem.getProductId().equals(event.productId()));
+        this.orderItems = newList;
         this.totalAmount = calculateTotalAmount(orderItems);
     }
 	

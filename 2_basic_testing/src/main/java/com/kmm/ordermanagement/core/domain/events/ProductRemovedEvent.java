@@ -26,4 +26,12 @@ public record ProductRemovedEvent(UUID orderId, UUID productId) {
 	public int hashCode() {
 		return Objects.hash(orderId, productId);
 	}
+
+	@Override
+	public String toString() {
+		return "ProductRemovedEvent{" +
+			"orderId=" + orderId +
+			", productId=" + productId +
+			'}';
+	}
 }

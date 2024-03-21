@@ -6,6 +6,7 @@ import com.kmm.ordermanagement.core.application.OrderQueryHandler;
 import com.kmm.ordermanagement.infrastructure.adapters.postgres.repositories.entities.OrderEntity;
 import com.kmm.ordermanagement.infrastructure.adapters.postgres.repositories.entities.OrderItemEntity;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
@@ -46,5 +47,37 @@ public record OrderDTO(@JsonProperty("orderId") UUID orderId,
     }
 	
 	static Logger logger = LoggerFactory.getLogger(OrderDTO.class);
-
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (!(o instanceof OrderDTO orderDTO)) {
+			return false;
+		}
+		return Objects.equals(orderId, orderDTO.orderId) && Objects.equals(
+			customerId, orderDTO.customerId) && Objects.equals(orderItems,
+			orderDTO.orderItems) && Objects.equals(street, orderDTO.street)
+			&& Objects.equals(city, orderDTO.city) && Objects.equals(state,
+			orderDTO.state) && Objects.equals(zipCode, orderDTO.zipCode);
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(orderId, customerId, orderItems, street, city, state, zipCode);
+	}
+	
+	@Override
+	public String toString() {
+		return "OrderDTO{" +
+			"orderId=" + orderId +
+			", customerId=" + customerId +
+			", orderItems=" + orderItems +
+			", street='" + street + '\'' +
+			", city='" + city + '\'' +
+			", state='" + state + '\'' +
+			", zipCode='" + zipCode + '\'' +
+			'}';
+	}
 }

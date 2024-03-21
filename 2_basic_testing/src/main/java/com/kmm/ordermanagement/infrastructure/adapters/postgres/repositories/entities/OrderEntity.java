@@ -6,6 +6,7 @@ import com.kmm.ordermanagement.core.domain.model.entities.DeliveryAddress;
 import com.kmm.ordermanagement.core.domain.model.entities.OrderItem;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -107,5 +108,37 @@ public class OrderEntity {
 			.toList();
 	}
 	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (!(o instanceof OrderEntity that)) {
+			return false;
+		}
+		return Objects.equals(getOrderId(), that.getOrderId()) && Objects.equals(
+			getCustomerId(), that.getCustomerId()) && Objects.equals(getOrderItems(),
+			that.getOrderItems()) && Objects.equals(getTotalAmount(), that.getTotalAmount())
+			&& Objects.equals(getDeliveryAddress(), that.getDeliveryAddress())
+			&& getStatus() == that.getStatus();
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(getOrderId(), getCustomerId(), getOrderItems(), getTotalAmount(),
+			getDeliveryAddress(), getStatus());
+	}
+	
+	@Override
+	public String toString() {
+		return "OrderEntity{" +
+			"orderId=" + orderId +
+			", customerId=" + customerId +
+			", orderItems=" + orderItems +
+			", totalAmount=" + totalAmount +
+			", deliveryAddress=" + deliveryAddress +
+			", status=" + status +
+			'}';
+	}
 }
 

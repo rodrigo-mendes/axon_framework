@@ -56,4 +56,12 @@ public class OrderItemKey implements Serializable {
 	public void setProductId(UUID productId) {
 		this.productId = productId;
 	}
+	
+	@Override
+	public String toString() {
+		return "OrderItemKey{" +
+			"orderId=" + orderId +
+			", productId=" + productId +
+			'}';
+	}
 }

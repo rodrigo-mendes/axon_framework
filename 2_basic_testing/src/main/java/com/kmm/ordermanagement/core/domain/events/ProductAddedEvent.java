@@ -33,4 +33,15 @@ public record ProductAddedEvent(UUID orderId, UUID productId, String productName
 	public int hashCode() {
 		return Objects.hash(orderId, productId, productName, price, quantity);
 	}
+	
+	@Override
+	public String toString() {
+		return "ProductAddedEvent{" +
+			"orderId=" + orderId +
+			", productId=" + productId +
+			", productName='" + productName + '\'' +
+			", price=" + price +
+			", quantity=" + quantity +
+			'}';
+	}
 }

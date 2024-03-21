@@ -2,6 +2,7 @@ package com.kmm.ordermanagement.infrastructure.adapters.postgres.repositories.en
 
 import com.kmm.ordermanagement.core.domain.events.ProductAddedEvent;
 import com.kmm.ordermanagement.core.domain.model.entities.OrderItem;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -84,5 +85,35 @@ public class OrderItemEntity {
 		this.orderEntities = orderEntities;
 	}
 	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (!(o instanceof OrderItemEntity that)) {
+			return false;
+		}
+		return Objects.equals(getId(), that.getId()) && Objects.equals(
+			getProductName(), that.getProductName()) && Objects.equals(getPrice(),
+			that.getPrice()) && Objects.equals(getQuantity(), that.getQuantity())
+			&& Objects.equals(getOrderEntities(), that.getOrderEntities());
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(getId(), getProductName(), getPrice(), getQuantity(),
+			getOrderEntities());
+	}
+	
+	@Override
+	public String toString() {
+		return "OrderItemEntity{" +
+			"id=" + id +
+			", productName='" + productName + '\'' +
+			", price=" + price +
+			", quantity=" + quantity +
+			", orderEntities=" + orderEntities +
+			'}';
+	}
 }
 
